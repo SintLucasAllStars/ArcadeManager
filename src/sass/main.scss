@@ -15,9 +15,15 @@
   height:40px;
   margin: 0;
   padding: 0;
+  background-color: rgba(255,255,255,0.5);
 }
 
 //Removing the blue outline on MacOS X
 button:focus, input:focus {
   outline: none;
+}
+
+li.selected {
+  border-color: red;
+  border-width: 5px;
 }

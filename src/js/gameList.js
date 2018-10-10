@@ -14,10 +14,11 @@ $(function (){
   gameList = new Vue ({
       el: "#gameList",
       data: {
-          newGame: new Game("Test Game 2", "David Jonas", (new Date()).getFullYear(), "davidtest002.exe"),
+          newGame: new Game("Game Title", "No Author", (new Date()).getFullYear(), "GameExecutable.exe"),
           games: [],
           selectedGame: 0,
-          installing: false
+          installing: false,
+          updating: false
         },
       methods: {
         loadGameList: function(){
@@ -63,6 +64,11 @@ $(function (){
           var selection = dialog.showOpenDialog();
           this.newGame.executable = selection[0];
         },
+        installNewDialog: function ()
+        {
+          this.updating = false;
+          this.newGame = new Game("Game Title", "No Author", (new Date()).getFullYear(), "GameExecutable.exe");
+        },
         installGame: function()
         {
           var source = path.dirname(this.newGame.executable);
@@ -71,8 +77,6 @@ $(function (){
 
           this.installing = true;
           var self = this;
-
-          //console.log("copying " + source + " into " + destination);
 
           ncp(source, destination, function (err) {
            if (err) {
@@ -84,10 +88,55 @@ $(function (){
            self.addGame();
           });
         },
+        updateGame: function (game)
+        {
+          var index = this.games.indexOf(game);
+          if (index > -1) {
+            this.updating = true;
+            this.newGame = game;
+            //TODO: Add code to handle changes.
+          }
+        },
+        isSelected: function (game)
+        {
+          var index = this.games.indexOf(game);
+          return this.selectedGame == index;
+        },
+        next: function (game)
+        {
+          if(this.selectedGame < this.games.length)
+          {
+            this.selectedGame++;
+          }
+          else {
+            this.selectedGame = 0;
+          }
+        },
+        prev: function (game)
+        {
+          if(this.selectedGame > 0)
+          {
+            this.selectedGame--;
+          }
+          else {
+            this.selectedGame = this.games.length-1;
+          }
+        }
       },
       watch: {
         games: 'saveGameList'
-      }
+      },
+      mounted: function() {
+       var self = this;
+       window.addEventListener('keyup', function(event) {
+         // If down arrow was pressed...
+         if (event.keyCode == 40) { //DOWN ARROW
+           self.next();
+         } else if(event.keyCode == 38) { //UP ARROW
+           self.prev();
+         }
+       });
+     }
   });
 
   gameList.loadGameList();

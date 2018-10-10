@@ -10,7 +10,8 @@
     "package-win": "electron-forge package --platform=win32",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint src --color"
+    "lint": "eslint src --color",
+    "dev": "node-sass src/sass/ -wo src/css/"
   },
   "keywords": [],
   "author": "David Jonas",

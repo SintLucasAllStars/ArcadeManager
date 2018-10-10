@@ -10,22 +10,22 @@
     <script src="js/gameList.js"></script>
   </head>
   <body>
-    <div class="container">
-      <button type="button" id="settingsButton" class="rounded-circle position-absolute zindex-tooltip" data-toggle="modal" data-target="#settingsModal">
-        <img src="images/settings.ico" width="30" height="30"/>
-      </button>
+    <section id="configForm">
+      <div class="container">
+        <button type="button" id="settingsButton" class="rounded-circle position-absolute zindex-tooltip" data-toggle="modal" data-target="#settingsModal">
+          <img src="images/settings.ico" width="30" height="30"/>
+        </button>
 
-      <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="settingsModalLabel"><img src="images/settings.ico" width="20" height="20"/> Settings</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <section id="configForm">
+        <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="settingsModalLabel"><img src="images/settings.ico" width="20" height="20"/> Settings</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
                 <label for="basePath">Games path:</label>
                 <div class="row">
                   <div class="col col-8">
@@ -35,14 +35,14 @@
                     <input type="button" class="btn btn-secondary" v-on:click="openBrowse" value="browse" />
                   </div>
                 </div>
-              </section>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       <section id="gameList" class="container-fluid">
         <h1>Games</h1>
@@ -50,7 +50,8 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="newGameeModalLabel">Install new game</h5>
+                <h5 class="modal-title" id="newGameeModalLabel" v-if="!updating">Install new game</h5>
+                <h5 class="modal-title" id="newGameeModalLabel" v-if="updating">Update Game</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -94,10 +95,8 @@
           </div>
         </div>
 
-
-
         <ul class="list-group">
-          <li class="list-group-item" v-for="game in games">
+          <li class="list-group-item" v-for="game in games" v-bind:class="{ selected: isSelected(game) }">
             <h3>{{ game.title }}</h3>
             <p>Author: {{ game.author }}</p>
             <p>Year: {{ game.year }}</p>
@@ -105,9 +104,10 @@
             <p>Times played: {{ game.timesPlayed }}</p>
             <button type="button" class="btn btn-primary" v-on:click="runGame(game)"> Play </button>
             <button type="button" class="btn btn-secondary" v-on:click="removeGame(game)"> Remove </button>
+            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#newGameModal" v-on:click="updateGame(game)"> Update </button>
           </li>
           <li class="list-group-item">
-            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#newGameModal">Install new</button>
+            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#newGameModal" v-on:click="installNewDialog">Install new</button>
           </li>
         </ul>
       </section>
