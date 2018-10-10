@@ -5,6 +5,7 @@
     <title></title>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/buttons.css" />
     <script src="js/includes.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/gameList.js"></script>
@@ -104,15 +105,26 @@
             <p>Year: {{ game.year }}</p>
             <p>Exe: {{ game.executable }}</p>
             <p>Times played: {{ game.timesPlayed }}</p>
-            <button type="button" class="btn btn-primary" v-on:click="runGame(game)"> Play </button>
-            <button type="button" class="btn btn-secondary" v-on:click="removeGame(game)"> Remove </button>
-            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#newGameModal" v-on:click="updateGame(game)"> Update </button>
+            <div class="arcade-button red"><button type="button" class="push--flat" v-on:click="runGame(game)"></button><label>Play</label></div>
+            <div class="arcade-button yellow"><button type="button" class="push--flat" v-on:click="removeGame(game)"></button><label>Remove</label></div>
+            <div class="arcade-button green"><button type="button" class="push--flat" data-toggle="modal" data-target="#newGameModal" v-on:click="updateGame(game)"></button><label>Update</label></div>
           </li>
           <li class="list-group-item">
-            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#newGameModal" v-on:click="installNewDialog">Install new</button>
+            <div class="arcade-button blue"><button type="button" class="push--flat" data-toggle="modal" data-target="#newGameModal" v-on:click="installNewDialog"></button><label>Install new</label></div>
           </li>
         </ul>
       </section>
+
+
+      <!--
+      <div class="arcade-button red"><button type="button" class="push--flat"></button><label>Play</label></div>
+      <div class="arcade-button blue"><button type="button" class="push--flat"></button><label>Install</label></div>
+      <div class="arcade-button yellow"><button type="button" class="push--flat"></button><label>Remove</label></div>
+      <br />
+      <div class="arcade-button green"><button type="button" class="push--flat"></button><label>Update</label></div>
+      <div class="arcade-button white"><button type="button" class="push--flat"></button><label></label></div>
+      <div class="arcade-button orange"><button type="button" class="push--flat"></button><label></label></div> 
+      -->
 
       <section id="keyboard">
         <div class="simple-keyboard"></div>
