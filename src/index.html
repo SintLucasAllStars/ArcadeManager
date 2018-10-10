@@ -51,6 +51,7 @@
 
       <section id="header">
       <h1>Arcade Manager</h1>
+      <div class="by-line">by: David Jonas</div>
    <!-- <pre>
     ▄▄▄       ██▀███   ▄████▄   ▄▄▄      ▓█████▄ ▓█████
    ▒████▄    ▓██ ▒ ██▒▒██▀ ▀█  ▒████▄    ▒██▀ ██▌▓█   ▀
@@ -166,6 +167,10 @@
             <div class="arcade-button blue"><button type="button" class="push--flat" data-toggle="modal" data-target="#newGameModal" v-on:click="installNewDialog"></button><label>Install Game</label></div>
           </li>
           <li class="tile" v-for="game in games" v-bind:class="{selected: isSelected(game)}" v-on:click="selectGame(game)">
+            <div class="gameCover">
+              <img v-bind:src="getCoverURL(game)">
+              <span></span>
+            </div>
             <h3 class="gameTitle">{{ game.title }}<span class="gameYear"> ({{ game.year }})</span></h3>
             <div class="gameAuthor">Author: {{ game.author }}</div>
 
@@ -194,5 +199,7 @@
         <div class="simple-keyboard"></div>
       </section>
     </div>
+
+    <div id="sintlucas-logo"><img src="images/sintlucas.png" /></div>
   </body>
 </html>

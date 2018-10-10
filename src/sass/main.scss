@@ -85,6 +85,18 @@ button:focus, input:focus {
     font-family: Arcade;
     margin-top: 100px;
   }
+
+  .by-line {
+    width:690px;
+    text-align: right;
+    color:$main-text-color;
+    margin: 0 auto;
+    font-family: monospace;
+    font-size: 8px;
+    line-height: 8px;
+    padding: 0;
+    margin-top: -10px;
+  }
 }
 
 #joystickTip {
@@ -140,7 +152,7 @@ button:focus, input:focus {
     color: $main-text-color;
     z-index: 3;
     border-radius: 20px;
-    border: 1px solid $main-text-color;
+    border: 2px solid $main-text-color;
     opacity: 0;
     transition: opacity .4s ease-in-out;
   }
@@ -152,6 +164,49 @@ button:focus, input:focus {
     .gameButtons {
       opacity: 1;
     }
+
+    .gameCover {
+      box-shadow: inset 0px 0px 77px -12px rgba(0,0,0,0.5);
+      border-color: red;
+    }
+  }
+
+  .gameCover
+  {
+    position: absolute;
+    top:0;
+    right: -1px;
+    z-index: 0;
+    width: $tile-width;
+    height: $tile-height;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 2px solid $main-text-color;
+
+    img {
+      position: absolute;
+      display: block;
+      top:0;
+      right: 0;
+      width: $tile-width;
+      height: $tile-height;
+      z-index: 1;
+      margin: 0;
+      padding: 0;
+    }
+    span{
+      position: absolute;
+      display: block;
+      top:0;
+      right: 0;
+      width: $tile-width;
+      height: $tile-height;
+      z-index: 2;
+      box-shadow: inset 0px 0px 50px 15px rgba(0,0,0,0.5);
+      background-color: rgba(0,0,0,0.3);
+      margin: 0;
+      padding: 0;
+    }
   }
 
   .gameTitle
@@ -159,6 +214,7 @@ button:focus, input:focus {
     font-size: 15px;
     text-align: center;
     color: $main-text-color;
+    position: absolute;
 
     span {
       font-size: 10px;
@@ -194,5 +250,17 @@ button:focus, input:focus {
     {
       font-size: 12px;
     }
+  }
+}
+
+#sintlucas-logo
+{
+  position: absolute;
+  z-index: 1000;
+  top: 300px;
+  left: 0;
+  img {
+    width:50px;
+    height:128px;
   }
 }

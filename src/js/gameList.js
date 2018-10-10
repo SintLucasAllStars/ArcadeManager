@@ -122,6 +122,20 @@ $(function (){
             this.newGame.timesPlayed = game.timesPlayed;
           }
         },
+        getCoverURL: function (game)
+        {
+          var index = this.games.indexOf(game);
+          if (index > -1) {
+            var dir = path.dirname(this.games[index].executable);
+            var cover = path.join(dir, "cover.jpg");
+            if(fs.existsSync(cover)) {
+              return cover;
+            }
+            else {
+              return "images/cover.jpg";
+            }
+          }
+        },
         isSelected: function (game)
         {
           var index = this.games.indexOf(game);

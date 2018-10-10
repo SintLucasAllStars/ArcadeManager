@@ -64,6 +64,16 @@ button:focus, input:focus {
     text-align: center;
     font-family: Arcade;
     margin-top: 100px; }
+  #header .by-line {
+    width: 690px;
+    text-align: right;
+    color: #fefefe;
+    margin: 0 auto;
+    font-family: monospace;
+    font-size: 8px;
+    line-height: 8px;
+    padding: 0;
+    margin-top: -10px; }
 
 #joystickTip {
   text-align: center;
@@ -111,7 +121,7 @@ button:focus, input:focus {
     color: #fefefe;
     z-index: 3;
     border-radius: 20px;
-    border: 1px solid #fefefe;
+    border: 2px solid #fefefe;
     opacity: 0;
     transition: opacity .4s ease-in-out; }
   .tile-group .selected {
@@ -119,10 +129,46 @@ button:focus, input:focus {
     border-color: red; }
     .tile-group .selected .gameButtons {
       opacity: 1; }
+    .tile-group .selected .gameCover {
+      box-shadow: inset 0px 0px 77px -12px rgba(0, 0, 0, 0.5);
+      border-color: red; }
+  .tile-group .gameCover {
+    position: absolute;
+    top: 0;
+    right: -1px;
+    z-index: 0;
+    width: 256px;
+    height: 256px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 2px solid #fefefe; }
+    .tile-group .gameCover img {
+      position: absolute;
+      display: block;
+      top: 0;
+      right: 0;
+      width: 256px;
+      height: 256px;
+      z-index: 1;
+      margin: 0;
+      padding: 0; }
+    .tile-group .gameCover span {
+      position: absolute;
+      display: block;
+      top: 0;
+      right: 0;
+      width: 256px;
+      height: 256px;
+      z-index: 2;
+      box-shadow: inset 0px 0px 50px 15px rgba(0, 0, 0, 0.5);
+      background-color: rgba(0, 0, 0, 0.3);
+      margin: 0;
+      padding: 0; }
   .tile-group .gameTitle {
     font-size: 15px;
     text-align: center;
-    color: #fefefe; }
+    color: #fefefe;
+    position: absolute; }
     .tile-group .gameTitle span {
       font-size: 10px;
       color: white; }
@@ -147,3 +193,12 @@ button:focus, input:focus {
     align-items: center; }
     .tile-group #installTile .arcade-button label {
       font-size: 12px; }
+
+#sintlucas-logo {
+  position: absolute;
+  z-index: 1000;
+  top: 300px;
+  left: 0; }
+  #sintlucas-logo img {
+    width: 50px;
+    height: 128px; }
