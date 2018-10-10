@@ -1,3 +1,4 @@
+@import '../../node_modules/simple-keyboard/build/css/index.css';
 
 #settingsButton {
     z-index: 1080;
@@ -26,4 +27,16 @@ button:focus, input:focus {
 li.selected {
   border-color: red;
   border-width: 5px;
+}
+
+
+#keyboard {
+  position: absolute;
+  right:0;
+  left:0;
+  bottom: 0;
+  padding:10px;
+  background-color: rgba(0,0,0,0.4);
+  display: none;
+  z-index: 2000;
 }

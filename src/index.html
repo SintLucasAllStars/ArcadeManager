@@ -8,6 +8,7 @@
     <script src="js/includes.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/gameList.js"></script>
+    <script src="js/keyboard.js"></script>
   </head>
   <body>
     <section id="configForm">
@@ -46,7 +47,7 @@
 
       <section id="gameList" class="container-fluid">
         <h1>Games</h1>
-        <div class="modal fade" id="newGameModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade keyboard" id="newGameModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -110,6 +111,10 @@
             <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#newGameModal" v-on:click="installNewDialog">Install new</button>
           </li>
         </ul>
+      </section>
+
+      <section id="keyboard">
+        <div class="simple-keyboard"></div>
       </section>
     </div>
   </body>
