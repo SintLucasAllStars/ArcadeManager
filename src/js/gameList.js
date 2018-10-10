@@ -104,7 +104,7 @@ $(function (){
         },
         next: function (game)
         {
-          if(this.selectedGame < this.games.length)
+          if(this.selectedGame < this.games.length-1)
           {
             this.selectedGame++;
           }
@@ -130,9 +130,9 @@ $(function (){
        var self = this;
        window.addEventListener('keyup', function(event) {
          // If down arrow was pressed...
-         if (event.keyCode == 40) { //DOWN ARROW
+         if (event.keyCode == 40 || event.keyCode == 83) { //DOWN ARROW or S
            self.next();
-         } else if(event.keyCode == 38) { //UP ARROW
+         } else if(event.keyCode == 38 || event.keyCode == 87) { //UP ARROW or W
            self.prev();
          }
        });
