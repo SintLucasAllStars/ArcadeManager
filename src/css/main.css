@@ -70,7 +70,8 @@ button:focus, input:focus {
   position: absolute;
   left: 0;
   right: 0;
-  z-index: 1; }
+  z-index: 1;
+  margin-bottom: 50px; }
   #joystickTip img {
     width: 64px;
     height: 64px;
@@ -87,7 +88,7 @@ button:focus, input:focus {
   list-style: none;
   display: flex;
   margin: 0;
-  padding: 100px 30px;
+  padding: 125px 30px;
   flex-wrap: wrap; }
   .tile-group .tile {
     display: block;
