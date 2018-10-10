@@ -89,7 +89,8 @@
                 </section>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-primary" v-on:click="installGame" data-dismiss="modal">Install</button>
+                <button type="button" class="btn btn-primary" v-if="!updating" v-on:click="installGame" data-dismiss="modal">Install</button>
+                <button type="button" class="btn btn-primary"  v-if="updating" v-on:click="installGame" data-dismiss="modal">Update</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
             </div>

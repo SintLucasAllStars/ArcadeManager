@@ -6,6 +6,8 @@ const $ = require('jquery');
 const { dialog } = require('electron').remote;
 const {shell} = require('electron').remote;
 const ncp = require('ncp').ncp;
+const rimraf = require('rimraf');
+
 ncp.limit = 16;
 
 //frontend
