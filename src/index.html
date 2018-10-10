@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="js/includes.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/gameList.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <button type="button" id="settingsButton" class="rounded-circle position-absolute zindex-tooltip" data-toggle="modal" data-target="#settingsModal">
+        <img src="images/settings.ico" width="30" height="30"/>
+      </button>
+
+      <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="settingsModalLabel"><img src="images/settings.ico" width="20" height="20"/> Settings</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <section id="configForm">
+                <label for="basePath">Games path:</label>
+                <div class="row">
+                  <div class="col col-8">
+                    <input type="text" class="form-control" value="test" id="basePath" name="basePath" disabled v-model.lazy="config.path" />
+                  </div>
+                  <div class="col col-3">
+                    <input type="button" class="btn btn-secondary" v-on:click="openBrowse" value="browse" />
+                  </div>
+                </div>
+              </section>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section id="gameList" class="container-fluid">
+        <h1>Games</h1>
+        <div class="modal fade" id="newGameModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="newGameeModalLabel">Install new game</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <section id="newGameForm">
+                  <label for="basePath">Game executable:</label>
+                  <div class="row">
+                    <div class="col col-8">
+                      <input type="text" class="form-control" value="test" id="newGamePath" name="newGamePath" disabled v-model.lazy="newGame.executable" />
+                    </div>
+                    <div class="col col-3">
+                      <input type="button" class="btn btn-secondary" v-on:click="selectExe" value="browse" />
+                    </div>
+                  </div>
+                  <label for="author">Title:</label>
+                  <div class="row">
+                    <div class="col col-8">
+                      <input type="text" class="form-control" value="test" id="newGameTitle" name="newGameTitle" v-model="newGame.title" />
+                    </div>
+                  </div>
+                  <label for="author">Author:</label>
+                  <div class="row">
+                    <div class="col col-8">
+                      <input type="text" class="form-control" value="test" id="newGameAuthor" name="newGameAuthor" v-model="newGame.author" />
+                    </div>
+                  </div>
+                  <label for="author">Year:</label>
+                  <div class="row">
+                    <div class="col col-8">
+                      <input type="text" class="form-control" value="test" id="newGameYear" name="newGameAuthor" v-model="newGame.year" />
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" v-on:click="installGame" data-dismiss="modal">Install</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <ul class="list-group">
+          <li class="list-group-item" v-for="game in games">
+            <h3>{{ game.title }}</h3>
+            <p>Author: {{ game.author }}</p>
+            <p>Year: {{ game.year }}</p>
+            <p>Exe: {{ game.executable }}</p>
+            <p>Times played: {{ game.timesPlayed }}</p>
+            <button type="button" class="btn btn-primary" v-on:click="runGame(game)"> Play </button>
+            <button type="button" class="btn btn-secondary" v-on:click="removeGame(game)"> Remove </button>
+          </li>
+          <li class="list-group-item">
+            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#newGameModal">Install new</button>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>

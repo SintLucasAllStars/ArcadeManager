@@ -1,0 +1,16 @@
+#settingsButton {
+  z-index: 1080; }
+
+::selection {
+  background: lightblue; }
+
+#settingsButton {
+  right: 10px;
+  top: 10px;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0; }
+
+button:focus, input:focus {
+  outline: none; }
