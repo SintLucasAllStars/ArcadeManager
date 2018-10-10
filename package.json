@@ -54,7 +54,6 @@
     "electron-squirrel-startup": "^1.0.0",
     "electron-storage": "^1.0.7",
     "jquery": "^3.3.1",
-    "masonry-layout": "^4.2.2",
     "ncp": "^2.0.0",
     "npm": "^6.4.1",
     "popper.js": "^1.14.4",

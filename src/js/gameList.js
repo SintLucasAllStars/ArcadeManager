@@ -127,6 +127,14 @@ $(function (){
           var index = this.games.indexOf(game);
           return this.selectedGame == index;
         },
+        selectGame: function (game)
+        {
+          var index = this.games.indexOf(game);
+          if(index > -1)
+          {
+            this.selectedGame = index;
+          }
+        },
         next: function (game)
         {
           if(!this.updating){
@@ -159,9 +167,9 @@ $(function (){
        var self = this;
        window.addEventListener('keyup', function(event) {
          // If down arrow was pressed...
-         if (event.keyCode == 40 || event.keyCode == 83) { //DOWN ARROW or S
+         if (event.keyCode == 39 || event.keyCode == 68) { //RIGHT ARROW or D
            self.next();
-         } else if(event.keyCode == 38 || event.keyCode == 87) { //UP ARROW or W
+         } else if(event.keyCode == 37 || event.keyCode == 65) { //LEFT ARROW or A
            self.prev();
          }
        });

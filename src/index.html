@@ -7,18 +7,21 @@
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/buttons.css" />
     <script src="js/includes.js"></script>
+    <script src="js/p5.min.js"></script>
+    <script src="js/background.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/gameList.js"></script>
     <script src="js/keyboard.js"></script>
   </head>
   <body>
+    <div id="backgroundCanvas">
+    </div>
     <section id="configForm">
       <div class="container">
         <button type="button" id="settingsButton" class="rounded-circle position-absolute zindex-tooltip" data-toggle="modal" data-target="#settingsModal">
           <img src="images/settings.ico" width="30" height="30"/>
         </button>
-
-        <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -46,13 +49,69 @@
         </div>
       </section>
 
-      <section id="gameList" class="container-fluid">
-        <h1>Games</h1>
+      <section id="header">
+      <h1>Arcade Manager</h1>
+   <!-- <pre>
+    ▄▄▄       ██▀███   ▄████▄   ▄▄▄      ▓█████▄ ▓█████
+   ▒████▄    ▓██ ▒ ██▒▒██▀ ▀█  ▒████▄    ▒██▀ ██▌▓█   ▀
+   ▒██  ▀█▄  ▓██ ░▄█ ▒▒▓█    ▄ ▒██  ▀█▄  ░██   █▌▒███
+   ░██▄▄▄▄██ ▒██▀▀█▄  ▒▓▓▄ ▄██▒░██▄▄▄▄██ ░▓█▄   ▌▒▓█  ▄
+    ▓█   ▓██▒░██▓ ▒██▒▒ ▓███▀ ░ ▓█   ▓██▒░▒████▓ ░▒████▒
+    ▒▒   ▓▒█░░ ▒▓ ░▒▓░░ ░▒ ▒  ░ ▒▒   ▓▒█░ ▒▒▓  ▒ ░░ ▒░ ░
+     ▒   ▒▒ ░  ░▒ ░ ▒░  ░  ▒     ▒   ▒▒ ░ ░ ▒  ▒  ░ ░  ░
+     ░   ▒     ░░   ░ ░          ░   ▒    ░ ░  ░    ░
+         ░  ░   ░     ░ ░            ░  ░   ░       ░  ░
+                      ░                   ░
+ ███▄ ▄███▓ ▄▄▄       ███▄    █  ▄▄▄        ▄████ ▓█████  ██▀███
+▓██▒▀█▀ ██▒▒████▄     ██ ▀█   █ ▒████▄     ██▒ ▀█▒▓█   ▀ ▓██ ▒ ██▒
+▓██    ▓██░▒██  ▀█▄  ▓██  ▀█ ██▒▒██  ▀█▄  ▒██░▄▄▄░▒███   ▓██ ░▄█ ▒
+▒██    ▒██ ░██▄▄▄▄██ ▓██▒  ▐▌██▒░██▄▄▄▄██ ░▓█  ██▓▒▓█  ▄ ▒██▀▀█▄
+▒██▒   ░██▒ ▓█   ▓██▒▒██░   ▓██░ ▓█   ▓██▒░▒▓███▀▒░▒████▒░██▓ ▒██▒
+░ ▒░   ░  ░ ▒▒   ▓▒█░░ ▒░   ▒ ▒  ▒▒   ▓▒█░ ░▒   ▒ ░░ ▒░ ░░ ▒▓ ░▒▓░
+░  ░      ░  ▒   ▒▒ ░░ ░░   ░ ▒░  ▒   ▒▒ ░  ░   ░  ░ ░  ░  ░▒ ░ ▒░
+░      ░     ░   ▒      ░   ░ ░   ░   ▒   ░ ░   ░by: David Jonas ░
+       ░         ░  ░         ░       ░  ░      ░    ░  ░   ░
+     </pre>
+     <pre>
+                                                    ;
+                                                    ED.
+                                   .,               E#Wi                 ,;
+                  j.              ,Wt               E###G.             f#i
+               .. EW,            i#D.            .. E#fD#W;          .E#t
+              ;W, E##j          f#f             ;W, E#t t##L        i#W,
+             j##, E###D.      .D#i             j##, E#t  .E#K,     L#D.
+            G###, E#jG#W;    :KW,             G###, E#t    j##f  :K#Wfff;
+          :E####, E#t t##f   t#f            :E####, E#t    :E#K: i##WLLLLt
+         ;W#DG##, E#t  :K#E:  ;#G          ;W#DG##, E#t   t##L    .E#L
+        j###DW##, E#KDDDD###i  :KE.       j###DW##, E#t .D#W;       f#E:
+       G##i,,G##, E#f,t#Wi,,,   .DW:     G##i,,G##, E#tiW#G.         ,WW;
+     :K#K:   L##, E#t  ;#W:       L#,  :K#K:   L##, E#K##i            .D#;
+    ;##D.    L##, DWi   ,KK:       jt ;##D.    L##, E##D.               tt
+    ,,,      .,,                      ,,,      .,,  E#t
+                                                    L:
+                                 L.                                               ,;
+                                 EW:        ,ft                       .Gt       f#i j.
+         ..       :           .. E##;       t#E            ..        j#W:     .E#t  EW,
+        ,W,     .Et          ;W, E###t      t#E           ;W,      ;K#f      i#W,   E##j
+       t##,    ,W#t         j##, E#fE#f     t#E          j##,    .G#D.      L#D.    E###D.
+      L###,   j###t        G###, E#t D#G    t#E         G###,   j#K;      :K#Wfff;  E#jG#W;
+    .E#j##,  G#fE#t      :E####, E#t  f#E.  t#E       :E####, ,K#f   ,GD; i##WLLLLt E#t t##f
+   ;WW; ##,:K#i E#t     ;W#DG##, E#t   t#K: t#E      ;W#DG##,  j#Wi   E#t  .E#L     E#t  :K#E:
+  j#E.  ##f#W,  E#t    j###DW##, E#t    ;#W,t#E     j###DW##,   .G#D: E#t    f#E:   E#KDDDD###i
+.D#L    ###K:   E#t   G##i,,G##, E#t     :K#D#E    G##i,,G##,     ,K#fK#t     ,WW;  E#f,t#Wi,,,
+:K#t     ##D.    E#t :K#K:   L##, E#t      .E##E  :K#K:   L##,       j###t      .D#; E#t  ;#W:
+...      #G      .. ;##D.    L##, ..         G#E ;##D.    L##,        .G#t        tt DWi   ,KK:
+        j          ,,,      .,,              fE ,,,      .,,           ;;
+                                              ,                               By: David Jonas
+     </pre> -->
+      </section>
+
+      <section id="gameList">
         <div class="modal fade keyboard" id="newGameModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="newGameeModalLabel" v-if="!updating">Install new game</h5>
+                <h5 class="modal-title" id="newGameeModalLabel" v-if="!updating">Install game</h5>
                 <h5 class="modal-title" id="newGameeModalLabel" v-if="updating">Update Game</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
@@ -98,19 +157,24 @@
           </div>
         </div>
 
-        <ul class="list-group">
-          <li class="list-group-item" v-for="game in games" v-bind:class="{ selected: isSelected(game) }">
-            <h3>{{ game.title }}</h3>
-            <p>Author: {{ game.author }}</p>
-            <p>Year: {{ game.year }}</p>
-            <p>Exe: {{ game.executable }}</p>
-            <p>Times played: {{ game.timesPlayed }}</p>
-            <div class="arcade-button red"><button type="button" class="push--flat" v-on:click="runGame(game)"></button><label>Play</label></div>
-            <div class="arcade-button yellow"><button type="button" class="push--flat" v-on:click="removeGame(game)"></button><label>Remove</label></div>
-            <div class="arcade-button green"><button type="button" class="push--flat" data-toggle="modal" data-target="#newGameModal" v-on:click="updateGame(game)"></button><label>Update</label></div>
+        <div id="joystickTip">
+          <img src="images/joystick.gif" />
+        </div>
+
+        <ul class="tile-group">
+          <li class="tile" id="installTile">
+            <div class="arcade-button blue"><button type="button" class="push--flat" data-toggle="modal" data-target="#newGameModal" v-on:click="installNewDialog"></button><label>Install Game</label></div>
           </li>
-          <li class="list-group-item">
-            <div class="arcade-button blue"><button type="button" class="push--flat" data-toggle="modal" data-target="#newGameModal" v-on:click="installNewDialog"></button><label>Install new</label></div>
+          <li class="tile" v-for="game in games" v-bind:class="{selected: isSelected(game)}" v-on:click="selectGame(game)">
+            <h3 class="gameTitle">{{ game.title }}<span class="gameYear"> ({{ game.year }})</span></h3>
+            <div class="gameAuthor">Author: {{ game.author }}</div>
+
+            <div class="gameTimesPlayed">Plays: {{ game.timesPlayed }}</div>
+            <div class="gameButtons">
+              <div class="arcade-button red"><button type="button" class="push--flat" v-on:click="runGame(game)"></button><label>Play</label></div>
+              <div class="arcade-button yellow"><button type="button" class="push--flat" v-on:click="removeGame(game)"></button><label>Remove</label></div>
+              <div class="arcade-button green"><button type="button" class="push--flat" data-toggle="modal" data-target="#newGameModal" v-on:click="updateGame(game)"></button><label>Update</label></div>
+            </div>
           </li>
         </ul>
       </section>
@@ -123,7 +187,7 @@
       <br />
       <div class="arcade-button green"><button type="button" class="push--flat"></button><label>Update</label></div>
       <div class="arcade-button white"><button type="button" class="push--flat"></button><label></label></div>
-      <div class="arcade-button orange"><button type="button" class="push--flat"></button><label></label></div> 
+      <div class="arcade-button orange"><button type="button" class="push--flat"></button><label></label></div>
       -->
 
       <section id="keyboard">

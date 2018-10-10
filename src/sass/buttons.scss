@@ -1,7 +1,7 @@
 
 $bg: #333;
 
-$push-size: 70px;
+$push-size: 30px;
 
 @mixin arcadeButton($push-color)
 {
@@ -166,7 +166,8 @@ $push-size: 70px;
     display: flex;
     align-items: center;
     line-height: $push-size;
-    margin-left: -10;
-    margin-top: 10;
+    margin-left: -5px;
+    margin-top: 10px;
+    font-size: 6px;
   }
 }
