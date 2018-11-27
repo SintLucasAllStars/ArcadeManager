@@ -15,7 +15,12 @@ const createWindow = () => {
     width: 800,
     height: 600,
   }); */
-  mainWindow = new BrowserWindow({fullscreen: true});
+  mainWindow = new BrowserWindow({
+    fullscreen: true,
+    webPreferences: {
+      webSecurity: false
+    }
+  });
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);

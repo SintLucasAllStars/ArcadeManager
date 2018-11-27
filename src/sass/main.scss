@@ -19,6 +19,10 @@ html, body {
   box-shadow: inset 0px 0px 2000px 50px rgba(80,80,80,0.2);
 }
 
+h4 {
+  margin-top: 30px;
+}
+
 #backgroundCanvas {
   position: fixed;
   top:0;
@@ -244,12 +248,22 @@ button:focus, input:focus {
 
   #installTile {
     display: flex;
-    align-items: center;
+    align-items:center;
+    flex-direction: column;
+    justify-content: center;
 
     .arcade-button label
     {
       font-size: 12px;
     }
+  }
+}
+
+#instructionsModal
+{
+  #keymappingIMG {
+    width:100%;
+    height: auto;
   }
 }
 

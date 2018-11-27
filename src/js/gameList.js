@@ -18,7 +18,9 @@ $(function (){
           games: [],
           selectedGame: 0,
           installing: false,
-          updating: false
+          updating: false,
+          anticheat: false,
+          anticheatTime: 5
         },
       methods: {
         loadGameList: function(){
@@ -57,9 +59,15 @@ $(function (){
           }
         },
         runGame: function(game){
-          game.timesPlayed++;
-          this.saveGameList();
-          shell.openItem(game.executable);
+          if(!this.anticheat)
+          {
+            this.anticheat = true;
+            var self = this;
+            setTimeout(function(){self.anticheat = false;}, this.anticheatTime*1000);
+            game.timesPlayed++;
+            this.saveGameList();
+            shell.openItem(game.executable);
+          }
         },
         selectExe: function ()
         {
@@ -129,7 +137,9 @@ $(function (){
             var dir = path.dirname(this.games[index].executable);
             var cover = path.join(dir, "cover.jpg");
             if(fs.existsSync(cover)) {
-              return cover;
+              var _img = fs.readFileSync(cover).toString('base64');
+              var cover_base64 = "data:image/png;base64," + _img;
+              return cover_base64;
             }
             else {
               return "images/cover.jpg";
@@ -172,6 +182,22 @@ $(function (){
               this.selectedGame = this.games.length-1;
             }
           }
+        },
+        redButton: function (){
+          this.runGame(this.games[this.selectedGame]);
+        },
+        blueButton: function (){
+          this.removeGame(this.games[this.selectedGame]);
+        },
+        yellowButton: function(){
+          $(".tile-group .selected .yellow button").click();
+        },
+        greenButton: function () {
+          this.installNewDialog();
+          $("#installButton").click();
+        },
+        whiteButton: function () {
+          $("#instructionsButton").click();
         }
       },
       watch: {
@@ -185,10 +211,36 @@ $(function (){
            self.next();
          } else if(event.keyCode == 37 || event.keyCode == 65) { //LEFT ARROW or A
            self.prev();
+         } else if(event.keyCode == 82 || event.keyCode == 55) //Red
+         {
+           event.preventDefault();
+           self.redButton();
+         } else if(event.keyCode == 16 || event.keyCode == 56) //Blue
+         {
+           event.preventDefault();
+           self.blueButton();
+         } else if(event.keyCode == 70 || event.keyCode == 57) //Yellow
+         {
+           event.preventDefault();
+           self.yellowButton();
+         }
+         else if(event.keyCode == 32 || event.keyCode == 52) //Green
+         {
+           event.preventDefault();
+           self.greenButton();
+         }
+         else if(event.keyCode == 17 || event.keyCode == 53) //White
+         {
+           event.preventDefault();
+           self.whiteButton();
          }
        });
      }
   });
+
+  $('#newGameModal').on('hidden.bs.modal', function () {
+    gameList.updating = false;
+  })
 
   gameList.loadGameList();
 });

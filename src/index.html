@@ -158,17 +158,47 @@
           </div>
         </div>
 
+        <div class="modal fade" id="instructionsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Instructions</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <h4>Key mapping</h4>
+                <img id="keymappingIMG" src="images/KeyMapping.jpg" />
+
+                <h4>Cover image</h4>
+                To add a cover image to your game you should add an image file called <strong>cover.jpg</strong> with dimentions <strong>512x512 pixels</strong> to your game folder (where the game executable is)
+
+                <h4>Quitting game</h4>
+                Make sure there is a way to quit your game. You should use the escape key to do this. If you need the escape key for something else in your game then make sure there is a way to quit the game through in-game menus.
+
+                <h4>Updating your game</h4>
+                Please do not install multiple versions of your game. When you have the game installed you can use the Update function to install the new version. You can also use this function to change the author name, year etc.
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div id="joystickTip">
           <img src="images/joystick.gif" />
         </div>
 
         <ul class="tile-group">
           <li class="tile" id="installTile">
-            <div class="arcade-button blue"><button type="button" class="push--flat" data-toggle="modal" data-target="#newGameModal" v-on:click="installNewDialog"></button><label>Install Game</label></div>
+            <div class="arcade-button green"><button type="button" id="installButton" class="push--flat" data-toggle="modal" data-target="#newGameModal" v-on:click="installNewDialog"></button><label>Install Game</label></div>
+            <div class="arcade-button white"><button type="button" id="instructionsButton" class="push--flat" data-toggle="modal" data-target="#instructionsModal"></button><label>Instructions</label></div>
           </li>
           <li class="tile" v-for="game in games" v-bind:class="{selected: isSelected(game)}" v-on:click="selectGame(game)">
             <div class="gameCover">
-              <img v-bind:src="getCoverURL(game)">
+              <img v-bind:src="getCoverURL(game)" />
               <span></span>
             </div>
             <h3 class="gameTitle">{{ game.title }}<span class="gameYear"> ({{ game.year }})</span></h3>
@@ -177,8 +207,8 @@
             <div class="gameTimesPlayed">Plays: {{ game.timesPlayed }}</div>
             <div class="gameButtons">
               <div class="arcade-button red"><button type="button" class="push--flat" v-on:click="runGame(game)"></button><label>Play</label></div>
-              <div class="arcade-button yellow"><button type="button" class="push--flat" v-on:click="removeGame(game)"></button><label>Remove</label></div>
-              <div class="arcade-button green"><button type="button" class="push--flat" data-toggle="modal" data-target="#newGameModal" v-on:click="updateGame(game)"></button><label>Update</label></div>
+              <div class="arcade-button blue"><button type="button" class="push--flat" v-on:click="removeGame(game)"></button><label>Remove</label></div>
+              <div class="arcade-button yellow"><button type="button" class="push--flat" data-toggle="modal" data-target="#newGameModal" v-on:click="updateGame(game)"></button><label>Update</label></div>
             </div>
           </li>
         </ul>

@@ -8,6 +8,9 @@ html, body {
   background-color: #111;
   box-shadow: inset 0px 0px 2000px 50px rgba(80, 80, 80, 0.2); }
 
+h4 {
+  margin-top: 30px; }
+
 #backgroundCanvas {
   position: fixed;
   top: 0;
@@ -190,9 +193,15 @@ button:focus, input:focus {
     text-align: center; }
   .tile-group #installTile {
     display: flex;
-    align-items: center; }
+    align-items: center;
+    flex-direction: column;
+    justify-content: center; }
     .tile-group #installTile .arcade-button label {
       font-size: 12px; }
+
+#instructionsModal #keymappingIMG {
+  width: 100%;
+  height: auto; }
 
 #sintlucas-logo {
   position: absolute;
