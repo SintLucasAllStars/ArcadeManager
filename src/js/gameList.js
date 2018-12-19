@@ -20,7 +20,8 @@ $(function (){
           installing: false,
           updating: false,
           anticheat: false,
-          anticheatTime: 5
+          anticheatTime: 5,
+          expoMode: false
         },
       methods: {
         loadGameList: function(){
@@ -48,14 +49,21 @@ $(function (){
           });
         },
         addGame: function(){
-          this.games.push(new Game(this.newGame.title, this.newGame.author, this.newGame.year, this.newGame.executable, this.newGame.timesPlayed));
+          if(!this.expoMode)
+          {
+            this.games.push(new Game(this.newGame.title, this.newGame.author, this.newGame.year, this.newGame.executable, this.newGame.timesPlayed));
+          }
         },
         removeGame: function(game){
-          var index = this.games.indexOf(game);
-          if (index > -1) {
-            this.games.splice(index, 1);
-            var dir = path.dirname(game.executable);
-            rimraf.sync(dir);
+          if(!this.expoMode && confirm("Are you sure you want to delete " + game.title + ". This action cannot be undone."))
+          {
+            //TODO: CONFIRM!!
+            var index = this.games.indexOf(game);
+            if (index > -1) {
+              this.games.splice(index, 1);
+              var dir = path.dirname(game.executable);
+              rimraf.sync(dir);
+            }
           }
         },
         runGame: function(game){
@@ -85,49 +93,55 @@ $(function (){
         },
         installGame: function()
         {
-          if(this.updating)
+          if(!this.expoMode)
           {
-            var original = this.games[this.selectedGame];
-            this.removeGame(original);
-          }
+            if(this.updating)
+            {
+              var original = this.games[this.selectedGame];
+              this.removeGame(original);
+            }
 
-          var source = path.dirname(this.newGame.executable);
-          var exeName = path.basename(this.newGame.executable);
-          var destination = path.join(settings.config.path, path.basename(source));
+            var source = path.dirname(this.newGame.executable);
+            var exeName = path.basename(this.newGame.executable);
+            var destination = path.join(settings.config.path, path.basename(source));
 
-          this.installing = true;
-          var self = this;
+            this.installing = true;
+            var self = this;
 
-          if(source != destination)
-          {
-            console.log("Will copy " + source + " ---> " + destination);
-            ncp(source, destination, function (err) {
-             if (err) {
-               return console.error(err);
-             }
-             console.log('done installing!');
-             self.installing = false;
-             self.newGame.executable = path.join(destination, exeName);
-             self.addGame();
-            });
-          }
-          else
-          {
-            console.log("NOT COPYING " + source + " ---> " + destination);
-            self.addGame();
+            if(source != destination)
+            {
+              console.log("Will copy " + source + " ---> " + destination);
+              ncp(source, destination, function (err) {
+               if (err) {
+                 return console.error(err);
+               }
+               console.log('done installing!');
+               self.installing = false;
+               self.newGame.executable = path.join(destination, exeName);
+               self.addGame();
+              });
+            }
+            else
+            {
+              console.log("NOT COPYING " + source + " ---> " + destination);
+              self.addGame();
+            }
           }
         },
         updateGame: function (game)
         {
-          var index = this.games.indexOf(game);
-          if (index > -1) {
-            this.selectedGame = index;
-            this.updating = true;
-            this.newGame.title = game.title;
-            this.newGame.author = game.author;
-            this.newGame.year = game.year;
-            this.newGame.executable = game.executable;
-            this.newGame.timesPlayed = game.timesPlayed;
+          if(!this.expoMode)
+          {
+            var index = this.games.indexOf(game);
+            if (index > -1) {
+              this.selectedGame = index;
+              this.updating = true;
+              this.newGame.title = game.title;
+              this.newGame.author = game.author;
+              this.newGame.year = game.year;
+              this.newGame.executable = game.executable;
+              this.newGame.timesPlayed = game.timesPlayed;
+            }
           }
         },
         getCoverURL: function (game)

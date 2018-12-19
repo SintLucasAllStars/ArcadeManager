@@ -8,7 +8,8 @@ $(function () {
       config: {
         path: "/"
       },
-      configLoaded:false
+      configLoaded:false,
+      expoMode:false
     },
     methods: {
       loadConfig: function ()
@@ -46,6 +47,11 @@ $(function () {
       openBrowse: function (){
         var selection = dialog.showOpenDialog({ properties: ['openDirectory']});
         this.config.path = selection[0];
+      },
+      setExpoMode: function (){
+        console.log("SETTING EXPO MODE!!")
+        gameList.expoMode = !gameList.expoMode;
+        this.expoMode = gameList.expoMode;
       }
     },
     watch: {

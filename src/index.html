@@ -12,13 +12,14 @@
     <script src="js/settings.js"></script>
     <script src="js/gameList.js"></script>
     <script src="js/keyboard.js"></script>
+    <script src="js/crashSafety.js"></script>
   </head>
   <body>
     <div id="backgroundCanvas">
     </div>
     <section id="configForm">
       <div class="container">
-        <button type="button" id="settingsButton" class="rounded-circle position-absolute zindex-tooltip" data-toggle="modal" data-target="#settingsModal">
+        <button v-if="!expoMode" type="button" id="settingsButton" class="rounded-circle position-absolute zindex-tooltip" data-toggle="modal" data-target="#settingsModal">
           <img src="images/settings.ico" width="30" height="30"/>
         </button>
         <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel" aria-hidden="true">
@@ -38,6 +39,11 @@
                   </div>
                   <div class="col col-3">
                     <input type="button" class="btn btn-secondary" v-on:click="openBrowse" value="browse" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col col-8">
+                    <input type="checkbox" name="expoMode" id="expoMode" v-on:change="setExpoMode"/><label for="expoMode">Expo Mode</label>
                   </div>
                 </div>
               </div>
@@ -192,7 +198,7 @@
         </div>
 
         <ul class="tile-group">
-          <li class="tile" id="installTile">
+          <li class="tile" id="installTile" v-if="!expoMode">
             <div class="arcade-button green"><button type="button" id="installButton" class="push--flat" data-toggle="modal" data-target="#newGameModal" v-on:click="installNewDialog"></button><label>Install Game</label></div>
             <div class="arcade-button white"><button type="button" id="instructionsButton" class="push--flat" data-toggle="modal" data-target="#instructionsModal"></button><label>Instructions</label></div>
           </li>
@@ -207,8 +213,8 @@
             <div class="gameTimesPlayed">Plays: {{ game.timesPlayed }}</div>
             <div class="gameButtons">
               <div class="arcade-button red"><button type="button" class="push--flat" v-on:click="runGame(game)"></button><label>Play</label></div>
-              <div class="arcade-button blue"><button type="button" class="push--flat" v-on:click="removeGame(game)"></button><label>Remove</label></div>
-              <div class="arcade-button yellow"><button type="button" class="push--flat" data-toggle="modal" data-target="#newGameModal" v-on:click="updateGame(game)"></button><label>Update</label></div>
+              <div class="arcade-button blue" v-if="!expoMode"><button type="button" class="push--flat" v-on:click="removeGame(game)"></button><label>Remove</label></div>
+              <div class="arcade-button yellow" v-if="!expoMode"><button type="button" class="push--flat" data-toggle="modal" data-target="#newGameModal" v-on:click="updateGame(game)"></button><label>Update</label></div>
             </div>
           </li>
         </ul>
